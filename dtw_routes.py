@@ -88,7 +88,7 @@ for i in range(len(test_points)):
                 break
 
     # =============================================================================
-    # plot path of queries from test_set_a1.csv
+    # plot path of queries from TestSet
     # =============================================================================
     query_latitudes = []
     query_longitudes = []
