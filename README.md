@@ -11,3 +11,5 @@ To fix this, i'm redirecting you to a certain thread on github, where some peopl
 Basically, claiming an API key for Google and/or enabling Billing will resolve this problem. 
 
 Finally, im creating html files, 5 * queries from test files. For example, dtw_map0 to dtw_map4 are the 5 similar bus routes to dtw_query_map0.
+
+LCS to be pushed in later in the future
