@@ -107,7 +107,7 @@ for i in range(len(test_points)):
                 best_matching_paths.pop()
                 break
     # =============================================================================
-    # plot path of queries from test_set_a2.csv
+    # plot path of queries from TestSet
     # =============================================================================
     query_latitudes = []
     query_longitudes = []
@@ -122,7 +122,7 @@ for i in range(len(test_points)):
     gmap.draw(save)
 
     # =============================================================================
-    # plot dtw_maps for i-th query
+    # plot lcs_maps for i-th query
     # =============================================================================
     for j in range(MP):
         if len(best_matching_paths[i][1]) == 0:
