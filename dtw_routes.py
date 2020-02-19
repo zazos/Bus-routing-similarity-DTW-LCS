@@ -5,7 +5,6 @@ from dtw import dtw
 from gmplot import *
 import time
 
-
 start = time.time()
 
 #   convert dataset into tuples [X, Z, Y]
@@ -23,8 +22,8 @@ for index, row in TrainSet.iterrows():
     row_latitudes = []
     row_longitudes = []
     for every_row in TrainSet.iloc[index]['Trajectory']:
-        row_latitudes.append(every_row[1])
-        row_longitudes.append(every_row[2])
+        row_longitudes.append(every_row[1])
+        row_latitudes.append(every_row[2])
     train_latitudes.append(row_latitudes)
     train_longitudes.append(row_longitudes)
     train_journeyPatternId.append(row['Trajectory'])
@@ -45,8 +44,8 @@ for index, row in TestSet.iterrows():
     row_latitudes = []
     row_longitudes = []
     for every_row in TestSet.iloc[index]['Trajectory']:
-        row_latitudes.append(every_row[1])
-        row_longitudes.append(every_row[2])
+        row_longitudes.append(every_row[1])
+        row_latitudes.append(every_row[2])
     test_latitudes.append(row_latitudes)
     test_longitudes.append(row_longitudes)
 
@@ -79,7 +78,7 @@ for i in range(len(test_points)):
     # =============================================================================
     for j in range(K, len(train_points)):
         dtw_dist = dtw(test_points[i], train_points[j], dist=haversine)[0]
-        distances = (dtw_dist, train_indices[i])
+        distances = (dtw_dist, train_indices[j])
         for w in range(len(sorted_distances)):
             if distances[0] < sorted_distances[w][0]:
                 sorted_distances.append(distances)
@@ -88,15 +87,14 @@ for i in range(len(test_points)):
                 break
 
     # =============================================================================
-    # plot path of queries from TestSet
+    # plot path of queries from test_set_a1.csv
     # =============================================================================
     query_latitudes = []
     query_longitudes = []
     for j in test_points[i]:
-        query_latitudes.append(j[0])
         query_longitudes.append(j[1])
-    gmap = gmplot.GoogleMapPlotter(query_latitudes[0], query_longitudes[1], 18, apikey="AIzaSyCy1v52WYnyTuCiAqoNC_QB2aQM_qCja7E")
-    # gmap.apikey = "AIzaSyCy1v52WYnyTuCiAqoNC_QB2aQM_qCja7E"
+        query_latitudes.append(j[0])
+    gmap = gmplot.GoogleMapPlotter(query_latitudes[0], query_longitudes[0], 18, apikey="AIzaSyCy1v52WYnyTuCiAqoNC_QB2aQM_qCja7E")
     gmap.plot(query_latitudes, query_longitudes, 'green', edge_width=3)
     name = "dtw_query_map" + str(i)
     save = name + ".html"
@@ -106,8 +104,9 @@ for i in range(len(test_points)):
     # plot dtw_maps for i-th query
     # =============================================================================
     for j in range(K):
+        # train_points[i][0][0]: lat
+        # train_points[i][0][1]: lon
         gmap = gmplot.GoogleMapPlotter(train_points[i][0][0], train_points[i][0][1], 18, apikey="AIzaSyCy1v52WYnyTuCiAqoNC_QB2aQM_qCja7E")
-        # gmap.apikey = "AIzaSyCy1v52WYnyTuCiAqoNC_QB2aQM_qCja7E"
         nearest_latitudes = []
         nearest_longitudes = []
         # find the exact route from TrainSet

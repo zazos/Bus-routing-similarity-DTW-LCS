@@ -42,8 +42,8 @@ for index, row in TrainSet.iterrows():
     row_latitudes = []
     row_longitudes = []
     for every_row in TrainSet.iloc[index]['Trajectory']:
-        row_latitudes.append(every_row[1])
-        row_longitudes.append(every_row[2])
+        row_longitudes.append(every_row[1])
+        row_latitudes.append(every_row[2])
     train_latitudes.append(row_latitudes)
     train_longitudes.append(row_longitudes)
     train_journeyPatternId.append(row['Trajectory'])
@@ -64,8 +64,8 @@ for index, row in TestSet.iterrows():
     row_latitudes = []
     row_longitudes = []
     for every_row in TestSet.iloc[index]['Trajectory']:
-        row_latitudes.append(every_row[1])
-        row_longitudes.append(every_row[2])
+        row_longitudes.append(every_row[1])
+        row_latitudes.append(every_row[2])
     test_latitudes.append(row_latitudes)
     test_longitudes.append(row_longitudes)
 
@@ -107,22 +107,21 @@ for i in range(len(test_points)):
                 best_matching_paths.pop()
                 break
     # =============================================================================
-    # plot path of queries from TestSet
+    # plot path of queries from test_set_a2.csv
     # =============================================================================
     query_latitudes = []
     query_longitudes = []
     for j in test_points[i]:
         query_latitudes.append(j[0])
         query_longitudes.append(j[1])
-    gmap = gmplot.GoogleMapPlotter(query_latitudes[0], query_longitudes[1], 18, apikey="AIzaSyCy1v52WYnyTuCiAqoNC_QB2aQM_qCja7E")
-    # gmap.apikey = "AIzaSyCy1v52WYnyTuCiAqoNC_QB2aQM_qCja7E"
+    gmap = gmplot.GoogleMapPlotter(query_latitudes[0], query_longitudes[0], 18, apikey="AIzaSyCy1v52WYnyTuCiAqoNC_QB2aQM_qCja7E")
     gmap.plot(query_latitudes, query_longitudes, 'green', edge_width=3)
     name = "lcs_query_map" + str(i)
     save = name + ".html"
     gmap.draw(save)
 
     # =============================================================================
-    # plot lcs_maps for i-th query
+    # plot dtw_maps for i-th query
     # =============================================================================
     for j in range(MP):
         if len(best_matching_paths[i][1]) == 0:
@@ -145,7 +144,7 @@ for i in range(len(test_points)):
         name = "lcs_map" + str(i*5 + j)
         save = name + ".html"
         gmap.draw(save)
-        print("\tNeighbor {0} \n JP_ID {1} \n DTW = {2}km \n".format(j+1, TrainSet.loc[best_matching_paths[i][2]]['journeyPatternId'], best_matching_paths[i][0]))
+        print("\tNeighbor {0} \n JP_ID {1} \n Matching points = {2} \n".format(j+1, TrainSet.loc[best_matching_paths[i][2]]['journeyPatternId'], best_matching_paths[i][0]))
     lcs_end = time.time()
     DT = str(float((lcs_end - lcs_start))) + "s"
     print("DT = {0}".format(DT))
